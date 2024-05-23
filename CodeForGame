@@ -1,0 +1,63 @@
+using UnityEngine;
+
+public class ExampleScript : MonoBehaviour
+{
+    // Vector variables
+    private Vector3 initialPosition;
+    private Vector3 moveDirection;
+    
+    // Rigidbody component for physics-related interactions
+    private Rigidbody rb;
+
+    // Called when the script instance is being loaded
+    void Awake()
+    {
+        // Initialize objects or components
+        rb = GetComponent<Rigidbody>();
+        Debug.Log("Awake: Rigidbody component initialized.");
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        // Initialize variables or perform actions at the start
+        initialPosition = transform.position;
+        moveDirection = Vector3.forward; // Example direction: forward
+        Debug.Log("Start: Initial position and move direction set.");
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        // Handle continuous per-frame logic
+        if (Input.GetKey(KeyCode.W))
+        {
+            transform.Translate(Vector3.forward * Time.deltaTime);
+        }
+        if (Input.GetKey(KeyCode.S))
+        {
+            transform.Translate(Vector3.back * Time.deltaTime);
+        }
+        if (Input.GetKey(KeyCode.A))
+        {
+            transform.Translate(Vector3.left * Time.deltaTime);
+        }
+        if (Input.GetKey(KeyCode.D))
+        {
+            transform.Translate(Vector3.right * Time.deltaTime);
+        }
+
+        Debug.Log("Update: Player input processed.");
+    }
+
+    // FixedUpdate is called at a fixed interval and is independent of frame rate
+    void FixedUpdate()
+    {
+        // Physics-related calculations
+        if (rb != null)
+        {
+            rb.MovePosition(rb.position + moveDirection * Time.fixedDeltaTime);
+            Debug.Log("FixedUpdate: Rigidbody moved.");
+        }
+    }
+}
